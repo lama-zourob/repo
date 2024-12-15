@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Books</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            color: #444;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .no-results {
+            text-align: center;
+            color: #FF4136;
+            font-size: 1.2em;
+        }
+
+        .book-list {
+            max-width: 600px;
+            margin: 20px auto;
+        }
+
+        .book-item {
+            background: #fff;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <h1>Search Books</h1>
+    <form action="/books/search" method="POST">
+        <label for="query">Search by Title, Author, or Genre:</label>
+        <input type="text" id="query" name="query" placeholder="Enter your search term..." required>
+        <button type="submit">Search</button>
+    </form>
+
+    {% if books is not none %}
+        {% if books %}
+        <div class="book-list">
+            {% for book in books %}
+            <div class="book-item">
+                <strong>Title:</strong> {{ book.title }}<br>
+                <strong>Author:</strong> {{ book.author }}<br>
+                <strong>Published Year:</strong> {{ book.published_year }}<br>
+                <strong>Genre:</strong> {{ book.genre or "N/A" }}
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="no-results">No books found matching your search criteria.</div>
+        {% endif %}
+    {% endif %}
+</body>
+</html>
